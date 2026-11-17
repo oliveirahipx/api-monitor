@@ -10,22 +10,9 @@
 	</parent>
 	<groupId>com.seumonitor</groupId>
 	<artifactId>api-tester</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>api-tester</name>
-	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<version>1.0.0</version>
+	<name>api-monitor</name>
+	<description>Monitor de saúde, latência e Content-Type de APIs REST</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -62,6 +49,20 @@
 	</dependencies>
 
 	<build>
+		<finalName>api-monitor-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<!-- Empacota o front-end no jar: o Spring Boot serve tudo em http://localhost:8080/ -->
+			<resource>
+				<directory>frontend</directory>
+				<targetPath>static</targetPath>
+				<excludes>
+					<exclude>assets/scss/**</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
