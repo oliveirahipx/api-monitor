@@ -1,0 +1,17 @@
+# Postgres local para o API Monitor.
+# Uso: docker compose up -d   (porta ocupada? POSTGRES_PORT=5433 docker compose up -d)
+# Só para desenvolvimento: aceita conexões sem senha e escuta apenas em 127.0.0.1.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: BD_Test-API
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - dados:/var/lib/postgresql/data
+
+volumes:
+  dados:
