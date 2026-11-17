@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginForm) {
         // Preenche com o usuário de teste para facilitar
-        emailInput.value = "caio@exemplo.com";
+        emailInput.value = "demo@exemplo.com";
         passwordInput.value = "123456";
 
         loginForm.addEventListener('submit', async (e) => {

@@ -36,14 +36,14 @@ public class UserService {
     public void setupInitialUser() {
         if (userRepository.count() == 0) {
             User initialUser = new User(
-                    "Caio Dev",
-                    "caio@exemplo.com",
+                    "Usuário Demo",
+                    "demo@exemplo.com",
                     "123456", // Senha de exemplo
-                    "API Pagamento",
-                    "https://localhost:0000.com"
+                    "Meu projeto",
+                    "https://jsonplaceholder.typicode.com"
             );
             userRepository.save(initialUser);
-            System.out.println("Usuário inicial criado: caio@exemplo.com / 123456");
+            System.out.println("Usuário inicial criado: demo@exemplo.com / 123456");
         }
     }
 
@@ -54,4 +54,23 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+
+    /**
+     * Atualiza nome, e-mail, projeto e URL base. A senha só muda se vier preenchida.
+     */
+    public Optional<User> updateUser(User dados) {
+        if (dados.getId() == null) {
+            return Optional.empty();
+        }
+        return userRepository.findById(dados.getId()).map(user -> {
+            user.setName(dados.getName());
+            user.setEmail(dados.getEmail());
+            user.setProjectName(dados.getProjectName());
+            user.setBaseUrl(dados.getBaseUrl());
+            if (dados.getPassword() != null && !dados.getPassword().isBlank()) {
+                user.setPassword(dados.getPassword());
+            }
+            return userRepository.save(user);
+        });
+    }
 }

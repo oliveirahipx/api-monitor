@@ -4,7 +4,10 @@ import com.seumonitor.api_tester.DTO.LoginRequest;
 import com.seumonitor.api_tester.Model.User;
 import com.seumonitor.api_tester.Service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +46,21 @@ public class AuthController {
             // Falha: Retorna status 401 Unauthorized
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    /** Dados do usuário para a tela de Configurações. */
+    @GetMapping("/user/{email}")
+    public ResponseEntity<User> getUser(@PathVariable String email) {
+        return userService.getUserByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /** Salva as alterações feitas na tela de Configurações. */
+    @PutMapping("/user/update")
+    public ResponseEntity<User> updateUser(@RequestBody User dados) {
+        return userService.updateUser(dados)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
